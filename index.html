@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>뮤직 플레이어</title>
+    <script src="app.js"></script>
+    <style>
+        .progress {
+            border:1px solid #ddd;
+            height:15px;
+        }
+
+        .bar {
+            width:33.33%;
+            height:100%;
+            background-color: #ff0;
+        }
+        .info {
+            display:flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="player">
+        <div class="info">
+            <span class="current-time">00:00:00</span>
+            <span class="total-time">00:00:00</span>
+        </div>
+        <div class="progress">
+            <div class="bar"></div>
+        </div>
+        <audio src="./example.mp3"></audio>
+        <button class="play">재생</button>
+        <button class="stop">정지</button>
+    </div>
+</body>
+
+</html>
