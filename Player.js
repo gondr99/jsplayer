@@ -1,3 +1,9 @@
+const REPEATMODE = {
+    "NO":0,
+    "ONE":1,
+    "LIST":2
+};
+
 class Player {
     constructor(el, app){
         this.app = app;
@@ -16,6 +22,10 @@ class Player {
         this.fileName = this.playerDom.querySelector(".file-name");
         this.playList = null; //플레이리스트 차후 연결
         this.playable = false; //재생 가능한지 여부 
+        this.repeatMode = REPEATMODE.NO;
+
+        this.modeBtnList = document.querySelectorAll(".repeat-btn");
+
         this.addListener();
         requestAnimationFrame(this.frame.bind(this));
     }
@@ -25,7 +35,7 @@ class Player {
         this.audio.src = fileURL;
         this.audio.addEventListener("loadeddata", ()=>{
             this.audio.pause();
-            this.fileName = musicFile.name;
+            this.fileName.innerHTML = musicFile.name;
             this.playable = true;
             this.play();
         });
@@ -35,6 +45,24 @@ class Player {
         this.playBtn.addEventListener("click",  this.play.bind(this));
         this.stopBtn.addEventListener("click",  this.stop.bind(this));
         this.progress.addEventListener("click", this.changeSeeking.bind(this));
+        this.audio.addEventListener("ended", this.musicEnd.bind(this));
+
+        this.modeBtnList.forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                this.repeatMode = e.target.value * 1;
+            });
+        })
+    }
+
+    musicEnd(){
+        if(this.repeatMode == REPEATMODE.ONE){
+            this.audio.currentTime = 0;
+            this.audio.play();
+        }else if(this.repeatMode == REPEATMODE.LIST){
+            this.app.playList.getNextMusic(true);
+        }else if(this.repeatMode == REPEATMODE.NO ){
+            this.app.playList.getNextMusic(false);
+        }
     }
 
     changeSeeking(e){

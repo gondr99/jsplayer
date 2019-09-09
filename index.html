@@ -96,6 +96,11 @@
         #audioFile {
             visibility: hidden;
         }
+
+        .control {
+            display:grid;
+            grid-template-columns: 1fr 1fr;
+        }
     </style>
 </head>
 
@@ -116,8 +121,17 @@
                     <div class="bar"></div>
                 </div>
                 <audio src="./example.mp3"></audio>
-                <button class="play">재생</button>
-                <button class="stop">정지</button>
+                <div class="control">
+                    <div class="contol-btn">
+                        <button class="play">재생</button>
+                        <button class="stop">정지</button>
+                    </div>
+                    <div class="mode-btn">
+                        <input type="radio" name="repeat" class="repeat-btn" value="0" checked>반복없음
+                        <input type="radio" name="repeat" class="repeat-btn" value="1">한곡반복
+                        <input type="radio" name="repeat" class="repeat-btn" value="2">리스트반복
+                    </div>
+                </div>
             </div>
             <div id="playList">
                 <ul class="item-list">
@@ -128,7 +142,7 @@
                 </ul>
                 <div class="button-row">
                     <button id="openDialog">추가</button>
-                    <input type="file" id="audioFile">
+                    <input type="file" id="audioFile" multiple>
                 </div>
             </div>
         </div>
