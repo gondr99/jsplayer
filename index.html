@@ -101,6 +101,10 @@
             display:grid;
             grid-template-columns: 1fr 1fr;
         }
+
+        .visualizer {
+            height:400px;
+        }
     </style>
 </head>
 
@@ -131,6 +135,9 @@
                         <input type="radio" name="repeat" class="repeat-btn" value="1">한곡반복
                         <input type="radio" name="repeat" class="repeat-btn" value="2">리스트반복
                     </div>
+                </div>
+                <div class="visualizer">
+                    <canvas id="vCanvas"></canvas>
                 </div>
             </div>
             <div id="playList">
