@@ -30,10 +30,11 @@ class Player {
         this.ctx = this.canvas.getContext("2d");
 
         const visual = this.playerDom.querySelector(".visualizer");
+        
         this.canvas.width = visual.clientWidth;
         this.canvas.height = visual.clientHeight;
 
-        this.aCtx = new AudioContext();
+        this.aCtx = null;
         this.analyser = null;
         this.dataArray = null;
         this.barHeight = 0;
@@ -41,17 +42,17 @@ class Player {
         this.barWidth = null; //캔버스에 그려줄 바의 너비
 
         this.addListener();
-        this.initVisual();
         requestAnimationFrame(this.frame.bind(this));
     }
 
     initVisual(){
+        this.aCtx = new AudioContext();
         let src = this.aCtx.createMediaElementSource(this.audio); //오디오 태그로 부터 불러와서
         const analyser = this.analyser = this.aCtx.createAnalyser();
         src.connect(this.aCtx.destination);
         src.connect(analyser);
         //시각화를 위해 분석기에다가도 소스를 연결해줌.
-        analyser.fftSize = 8192;
+        analyser.fftSize = 512;
 
         //FFT 는 알고리즘의 이름으로 시간을 피리어드로 나눠 해당 피리어드별 프리퀀시를 만들어준다.
         //여기에 들어가는 fftSize 변수는 낮으면 작은 사이즈의 값을 리턴하게 된다.
@@ -66,6 +67,9 @@ class Player {
     }
 
     loadMusic(musicFile){
+        if(this.aCtx == null){
+            this.initVisual();
+        }
         let fileURL = URL.createObjectURL(musicFile);
         this.audio.src = fileURL;
         this.audio.addEventListener("loadeddata", ()=>{
@@ -109,12 +113,21 @@ class Player {
 
     play(){
         if(!this.playable) return;
-        this.audio.play();
+        if(this.audio.paused){
+            this.audio.play();
+            this.playBtn.innerHTML = `<i class="fas fa-pause"></i>`;
+        }else {
+            this.audio.pause();
+            this.playBtn.innerHTML = `<i class="fas fa-play"></i>`;
+        }
+        
     }
 
     stop(){
         if(!this.playable) return;
         this.audio.pause();
+        this.audio.currentTime = 0;
+        this.playBtn.innerHTML = `<i class="fas fa-play"></i>`;
     }
 
     frame(timestamp){
@@ -133,24 +146,25 @@ class Player {
 
         const W = this.canvas.width;
         const H = this.canvas.height;
-        //console.log(W, H, this.barWidth);
+        
         let x = 0;
         this.analyser.getByteFrequencyData(this.dataArray); //현재 프리퀀시의 데이터가 넘어온다.
+        //값은 항상 0~ 255까지의 값만이 나온다.
         const ctx = this.ctx;
 
         ctx.fillStyle = "rgba(0,0,0,0.2)";
         ctx.fillRect(0, 0, W, H);
 
         for (let i = 0; i < this.dataArray.length; i++) {
-            this.barHeight = this.dataArray[i] * 1;            
-            ctx.fillStyle = this.getColorString(this.dataArray[i], H);
+            this.barHeight = this.dataArray[i] * 1;      
+            ctx.fillStyle = this.getColorString(this.dataArray[i]);
             ctx.fillRect(x, (H - this.barHeight), this.barWidth, this.barHeight);
             x += this.barWidth+1;
         }
     }
 
-    getColorString(value, H) {
-        let p = value / H;
+    getColorString(value) {
+        let p = value / 255;
         if (p > 0.8) {
             return "rgb(250, 0, 255)";
         } else if (p > 0.7) {

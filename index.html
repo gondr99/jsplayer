@@ -9,103 +9,8 @@
     <script src="Player.js"></script>
     <script src="PlayList.js"></script>
     <script src="app.js"></script>
-    <style>
-        * {
-            margin:0;
-            padding:0;
-            box-sizing: border-box;
-        }
-
-        ul {
-            list-style: none;
-        }
-
-        .progress {
-            border: 1px solid #ddd;
-            height: 15px;
-        }
-
-        .bar {
-            width: 0;
-            height: 100%;
-            background-color: #ff0;
-        }
-
-        .time-info {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .flex {
-            display: flex;
-        }
-
-        .jus-con-center {
-            justify-content: center;
-        }
-
-        .ali-item-center {
-            align-items: center;
-        }
-
-        .main-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-gap:20px;
-        }
-
-        .container {
-            margin: 0 auto;
-            width: 1200px;
-        }
-
-        #playList {
-            border:1px solid #ddd;
-            border-radius: 6px;
-            padding:20px;
-        }
-
-        #playList .item {
-            width:100%;
-            color:white;
-            background-color: #5c6bc0;
-            padding:8px 12px;
-            border-radius: 0.25rem;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-            font-size:14px;
-            user-select: none;
-        }
-
-        #playList .item.active {
-            background-color: #9575cd;
-        }
-        #playList .item-list {
-            display:grid;
-            grid-gap:10px;
-            grid-template-columns: 1fr;
-            grid-auto-rows: 40px;
-            margin-bottom:20px;
-            min-height:300px;
-            box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.1);
-            border-radius: 5px;
-            padding:10px;
-        }
-
-        #audioFile {
-            visibility: hidden;
-        }
-
-        .control {
-            display:grid;
-            grid-template-columns: 1fr 1fr;
-        }
-
-        .visualizer {
-            height:400px;
-        }
-    </style>
+    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="fontawesome-free-5.11.1-web/css/all.min.css">
 </head>
 
 <body>
@@ -116,29 +21,24 @@
                     <div class="audio-info">
                         <div class="file-name">재생할 음악이 없습니다.</div>
                     </div>
-                    <div class="time-info">
-                        <span class="current-time">00:00:00</span>
-                        <span class="total-time">00:00:00</span>
-                    </div>
+                    <div class="time-info"><span class="current-time">00:00:00</span><span
+                            class="total-time">00:00:00</span></div>
                 </div>
                 <div class="progress">
                     <div class="bar"></div>
-                </div>
-                <audio src="./example.mp3"></audio>
+                </div><audio src="./example.mp3"></audio>
                 <div class="control">
                     <div class="contol-btn">
-                        <button class="play">재생</button>
-                        <button class="stop">정지</button>
+                        <button class="play btn-ico"><i class="fas fa-play"></i></button>
+                        <button class="stop btn-ico"><i class="fas fa-stop"></i></button>
                     </div>
                     <div class="mode-btn">
                         <input type="radio" name="repeat" class="repeat-btn" value="0" checked>반복없음
-                        <input type="radio" name="repeat" class="repeat-btn" value="1">한곡반복
+                        <input type="radio" name="repeat" class="repeat-btn" value="1">한곡반복 
                         <input type="radio" name="repeat" class="repeat-btn" value="2">리스트반복
                     </div>
                 </div>
-                <div class="visualizer">
-                    <canvas id="vCanvas"></canvas>
-                </div>
+                <div class="visualizer"><canvas id="vCanvas"></canvas></div>
             </div>
             <div id="playList">
                 <ul class="item-list">
@@ -148,9 +48,8 @@
                     <li class="item">sample.mp4</li>
                 </ul>
                 <div class="button-row">
-                    <button id="openDialog">추가</button>
-                    <input type="file" id="audioFile" multiple>
-                </div>
+                    <button id="openDialog" class="btn-ico"><i class="fas fa-plus-square"></i></button>
+                    <input type="file" id="audioFile" multiple></div>
             </div>
         </div>
     </div>

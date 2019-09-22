@@ -20,6 +20,10 @@ class PlayList {
     addList(e) {
         //여기서 추가하는 파일이 mp3파일인지 검사를 반드시 해줘야 한다.               
         Array.from(e.target.files).forEach(file => {
+            if(file.type.substring(0, 5) !== "audio") {
+                //오디오파일이 아니면 추가하지 않는다.
+                return;
+            }
             let obj = { idx: this.fileList.length, file: file, dom: null };
             this.fileList.push(obj);
             let item = document.createElement("li");
