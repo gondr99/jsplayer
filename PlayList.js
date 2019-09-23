@@ -10,16 +10,37 @@ class PlayList {
         this.fileList = [];
         this.playIdx = null; //현재 재생중인 음악의 인덱스
         this.addListener(); //이벤트 바인딩
+
     }
 
     addListener() {
         this.addBtn.addEventListener("click", e => this.fileInput.click());
-        this.fileInput.addEventListener("change", this.addList.bind(this));
+        this.fileInput.addEventListener("change", this.inputChange.bind(this));
+
+        this.listDom.addEventListener("dragover", this.fileDragOver.bind(this));
+        this.listDom.addEventListener("drop", this.fileDrop.bind(this));
     }
 
-    addList(e) {
+    fileDragOver(e){
+        e.stopPropagation();
+        e.preventDefault();
+        //console.log(e);
+    }
+
+    fileDrop(e){
+        e.stopPropagation();
+        e.preventDefault();
+        let files = Array.from(e.dataTransfer.files);
+        this.addList(files);
+    }
+
+    inputChange(e){
+        this.addList(Array.from(e.target.files));
+    }
+
+    addList(files) {
         //여기서 추가하는 파일이 mp3파일인지 검사를 반드시 해줘야 한다.               
-        Array.from(e.target.files).forEach(file => {
+        files.forEach(file => {
             if(file.type.substring(0, 5) !== "audio") {
                 //오디오파일이 아니면 추가하지 않는다.
                 return;
