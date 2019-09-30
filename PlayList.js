@@ -19,6 +19,33 @@ class PlayList {
 
         this.listDom.addEventListener("dragover", this.fileDragOver.bind(this));
         this.listDom.addEventListener("drop", this.fileDrop.bind(this));
+
+        this.itemList.addEventListener("drop", this.itemDrop.bind(this));
+    }
+
+    itemDrop(e){
+        let data = e.dataTransfer.getData("idx");
+        console.log(data);
+        if(data != ""){
+            //내용을 드래그시
+            e.stopPropagation();
+            e.preventDefault();
+
+            let y = e.clientY; //마우스가 드랍된 곳의 y좌표를 구한다.
+            let target = -1;
+            for(let i = 0; i < this.fileList.length; i++){
+                if(this.fileList[i].dom.offsetTop > y){
+                    target = i;
+                    break;
+                }
+            }
+            let moveItem = this.fileList.find(x => x.idx == data*1 );
+            if(target == -1) {
+                this.itemList.appendChild(moveItem.dom);
+            } else{
+                this.itemList.insertBefore(moveItem.dom, this.fileList[target].dom);
+            }            
+        }
     }
 
     fileDragOver(e){
@@ -30,6 +57,7 @@ class PlayList {
     fileDrop(e){
         e.stopPropagation();
         e.preventDefault();
+        
         let files = Array.from(e.dataTransfer.files);
         this.addList(files);
     }
@@ -51,6 +79,15 @@ class PlayList {
             item.classList.add("item");
             obj.dom = item; //돔 연결
             item.dataset.idx = obj.idx;
+
+            //dragand drop을 위한 코드
+            item.setAttribute("draggable", true); //드래그 가능하도록
+            item.addEventListener("dragstart", (e)=>{
+                e.dataTransfer.effectAllowed = "move";
+                e.dataTransfer.setData("idx", obj.idx);
+                e.dataTransfer.setDragImage(e.target, 0, 0);
+            });
+
             item.addEventListener("dblclick", (e) => {
                 let idx = e.target.dataset.idx;
                 let data = this.fileList.find(x => x.idx == idx);

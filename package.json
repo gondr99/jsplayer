@@ -1,0 +1,37 @@
+{
+  "name": "player",
+  "version": "1.0.0",
+  "description": "javascript로 만든mp3플레이어",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --mode=development",
+    "prod": "webpack --mode=production",
+    "watch": "webpack --watch --progress"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gondr99/jsplayer.git"
+  },
+  "keywords": [
+    "javascript",
+    "player",
+    "audio",
+    "visualizer"
+  ],
+  "author": "gondr",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gondr99/jsplayer/issues"
+  },
+  "homepage": "https://github.com/gondr99/jsplayer#readme",
+  "dependencies": {
+    "jsmediatags": "^3.9.2"
+  },
+  "devDependencies": {
+    "css-loader": "^3.2.0",
+    "mini-css-extract-plugin": "^0.8.0",
+    "style-loader": "^1.0.0",
+    "webpack": "^4.41.0",
+    "webpack-cli": "^3.3.9"
+  }
+}
