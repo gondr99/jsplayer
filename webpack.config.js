@@ -18,8 +18,9 @@ module.exports = {
                         options:{
                             hmr:process.env.NODE_ENV === 'development'
                         }
-                    }
-                    , 'css-loader']
+                    },
+                    'css-loader'
+                ]
             }
         ]
     },
