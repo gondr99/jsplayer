@@ -1,28 +1,29 @@
-import "./Player.js";
-import "./PlayList.js";
+const { app, BrowserWindow, ipcMain} = require('electron');
 
-let jsmediatags = require("jsmediatags");
-
-Number.prototype.timeFormat = function(){
-    let h = "0" + Math.floor(this / 3600);
-    h = h.substring(h.length - 2, h.length);
-    let m = "0" + Math.floor(this % 3600 / 60);
-    m = m.substring(m.length - 2, m.length);
-    let s = "0" + Math.floor(this % 60);
-    s = s.substring(s.length - 2, s.length);
-    return `${h} : ${m} : ${s}`;
+const defaultProps = {
+    width:1280,
+    height:600,
+    resizeable:true,
+    webPreferences:{
+        nodeIntegration:true,
+        nativeWindowOpen: true,
+        nodeIntegrationInWorker: true
+    }
 };
 
-class App {
-    constructor(playerEl, listEL){
-        this.player = new Player(playerEl, this);
-        this.playList = new PlayList(listEL, this);
+let win = null;
+function createWindow(){
+    win = new BrowserWindow(defaultProps);
+    win.setMenu(null);
+    win.loadFile("index.html");
 
-        console.log(jsmediatags);
-    }
+    win.on("closed", ()=>{
+        win = null;
+    });
 
-}
+    win.webContents.openDevTools();
+};
 
-window.addEventListener("load", ()=>{
-    let app = new App("#player", "#playList");
+app.on("ready", ()=>{
+    createWindow();
 });

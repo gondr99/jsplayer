@@ -1,3 +1,8 @@
+import "./Player.js";
+import "./PlayList.js";
+
+let jsmediatags = require("jsmediatags");
+
 Number.prototype.timeFormat = function(){
     let h = "0" + Math.floor(this / 3600);
     h = h.substring(h.length - 2, h.length);
@@ -12,7 +17,10 @@ class App {
     constructor(playerEl, listEL){
         this.player = new Player(playerEl, this);
         this.playList = new PlayList(listEL, this);
+
+        console.log(jsmediatags);
     }
+
 }
 
 window.addEventListener("load", ()=>{

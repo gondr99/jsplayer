@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "webpack --mode=development",
     "prod": "webpack --mode=production",
-    "watch": "webpack --watch --progress"
+    "watch": "webpack --watch --progress",
+    "start": "electron .",
+    "x64build": "electron-packager . lecshare --asar --platform=win32 --arch=x64 --out=dist64 --overwrite",
+    "x32build": "electron-packager . lecshare --asar --platform=win32 --arch=ia32 --out=dist32 --overwrite"
   },
   "repository": {
     "type": "git",
@@ -28,7 +31,10 @@
     "jsmediatags": "^3.9.2"
   },
   "devDependencies": {
+    "asar": "^2.0.1",
     "css-loader": "^3.2.0",
+    "electron": "^6.0.12",
+    "electron-packager": "^14.0.6",
     "mini-css-extract-plugin": "^0.8.0",
     "style-loader": "^1.0.0",
     "webpack": "^4.41.0",
