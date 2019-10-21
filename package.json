@@ -8,8 +8,8 @@
     "prod": "webpack --mode=production",
     "watch": "webpack --watch --progress",
     "start": "electron .",
-    "x64build": "electron-packager . lecshare --asar --platform=win32 --arch=x64 --out=dist64 --overwrite",
-    "x32build": "electron-packager . lecshare --asar --platform=win32 --arch=ia32 --out=dist32 --overwrite"
+    "x64build": "electron-packager . jsplayer --asar --platform=win32 --arch=x64 --out=dist64 --overwrite",
+    "x32build": "electron-packager . jsplayer --asar --platform=win32 --arch=ia32 --out=dist32 --overwrite"
   },
   "repository": {
     "type": "git",
@@ -28,6 +28,7 @@
   },
   "homepage": "https://github.com/gondr99/jsplayer#readme",
   "dependencies": {
+    "fs": "0.0.1-security",
     "jsmediatags": "^3.9.2"
   },
   "devDependencies": {

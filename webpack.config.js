@@ -8,6 +8,7 @@ module.exports = {
         filename:'app.js',
         path:path.resolve(__dirname, "dist")
     },
+    target:"electron-renderer",
     module:{
         rules:[
             {
